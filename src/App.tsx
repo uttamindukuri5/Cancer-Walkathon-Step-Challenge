@@ -2,6 +2,7 @@ import React from 'react';
 
 import Navbar from './components/Header/header';
 import Register from './components/Register/register';
+import RegisterMile from './components/RegisterMile/registerMile';
 import logo from './logo.svg';
 import './App.css';
 
@@ -13,6 +14,7 @@ function App() {
       </header>
       <section id="content">
         <Register />
+        <RegisterMile />
       </section>
       {/*<header className="App-header">*/}
       {/*  <img src={logo} className="App-logo" alt="logo" />*/}
