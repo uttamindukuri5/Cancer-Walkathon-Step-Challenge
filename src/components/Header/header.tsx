@@ -1,33 +1,53 @@
 import React from 'react';
-import {AppBar, Toolbar, Typography, IconButton, Button, createStyles, Theme} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import {makeStyles} from "@material-ui/core/styles";
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    NavbarText
+  } from 'reactstrap';
 
 export default () => {
-    const useStyles = makeStyles((theme: Theme) =>
-        createStyles({
-            menuButton: {
-                marginRight: theme.spacing(2),
-            },
-            title: {
-                flexGrow: 1,
-            },
-        }),
-    );
-
-    const classes = useStyles();
 
     return (
-        <AppBar position="static">
-            <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" className={classes.title}>
-                    Step Challenge
-                </Typography>
-                <Button color="inherit">Team Admin</Button>
-            </Toolbar>
-        </AppBar>
+        <Navbar color="light" light expand="md">
+        <NavbarBrand href="/">reactstrap</NavbarBrand>
+        <NavbarToggler onClick={ () => console.log('hello') } />
+        <Collapse isOpen={ false } navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <NavLink href="/components/">Components</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+            </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Options
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>
+                  Option 1
+                </DropdownItem>
+                <DropdownItem>
+                  Option 2
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  Reset
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
+          <NavbarText>Simple Text</NavbarText>
+        </Collapse>
+      </Navbar>
     );
 }
