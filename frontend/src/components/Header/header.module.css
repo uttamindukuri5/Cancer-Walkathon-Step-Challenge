@@ -1,0 +1,9 @@
+.navbarText {
+    color: white;
+}
+
+.register {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
