@@ -1,28 +1,50 @@
 import React, { useState, useEffect } from 'react';
+import { SelectButton } from 'primereact/selectbutton';
 
 import Chart from '../Chart/chart';
 import Table from '../Table/table';
 import RegisterMile from '../RegisterMile/registerMile';
+import ViewMile from '../ViewMile/viewMile';
 import classes from './home.module.css';
 
 export default () => {
 
-    const 
+    const
+        tabs = ['Dashboard', 'Enter Miles', 'View Your Miles'],
         [teams, setTeams]: any[] = useState([]),
-        [tab, setTab] = useState('Track Mile'),
-        [hover, setHover] = useState('Track-Mile');
+        [numUsers, setNumUsers] = useState(0),
+        [tab, setTab] = useState(tabs[0]);
 
     const fetchData = async () => {
         const response = await fetch('http://localhost:4000/teams'); 
         return await response.json();
     };
 
+    const fetchUsers = async () => {
+        const response = await fetch('http://localhost:4000/totalUsers');
+        return await response.json();
+    }
+
+    const getRemainingDays = (): number => {
+        const
+            endDate = new Date("10/20/2020"),
+            currentDate = new Date(),
+            timeDifference = endDate.getTime() - currentDate.getTime(),
+            daysDifference = timeDifference / (1000 * 3600 * 24); 
+
+        return Math.floor(daysDifference);
+    }
+
     useEffect(() => {
         fetchData()
             .then((data) => {
                 setTeams(data);
             });
-    }, []);
+        fetchUsers()
+            .then((data) => {
+                setNumUsers(data.totalUsers);
+            });
+    }, [setTeams, setNumUsers]);
 
     let totalMiles = 0;
     teams.forEach((team: any) => {
@@ -35,29 +57,44 @@ export default () => {
         base = (
             <RegisterMile />
         );
-    } else {
+    } else if (tab === 'Dashboard') {
         base = (
-            <div>
-                <div className={ classes.data }>
-                    <h1 id={ classes.heading }>{ totalMiles } Miles</h1>
-                    <Chart data={ teams } />
+            <div id={ classes.visual }>
+                <div className='p-d-flex p-jc-center p-flex-column p-flex-md-row'>
+                    <div className={classes.info + ' p-mb-2 p-mr-2'}>
+                        <h4>Total Miles</h4>
+                        <h2 className={ classes.heading }>{ totalMiles }</h2>
+                    </div>
+                    <div className={classes.info + ' p-mb-2 p-mr-2'}>
+                        <h4>Total Registrants</h4>
+                        <h2 className={ classes.heading }>{ numUsers }</h2>
+                    </div>
+                    <div className={classes.info + ' p-mb-2 p-mr-2'}>
+                        <h4>Remaining Days</h4>
+                        <h2 className={ classes.heading }>{ getRemainingDays() }</h2>
+                    </div>
                 </div>
-                <div className={ classes.data }>
-                    <Table data={ teams } />
+                <hr />
+                <div id={ classes.graphic }>
+                    <div className={ classes.data }>
+                        <Chart data={ teams } />
+                    </div>
+                    <div className={ classes.data }>
+                        <Table data={ teams } viewTeam={ true } />
+                    </div>
                 </div>
             </div>
+        );
+    } else {
+        base =(
+            <ViewMile />
         );
     }
 
     return (
         <div>
             <div className={ classes.tab }>
-                <div className={ hover === 'Mile Tracker' ? classes.active : classes.individualTab } onClick={ () => setTab('Mile Tracker') } onMouseEnter={ () => setHover('Mile Tracker')}>
-                    Mile Tracker
-                </div>
-                <div className={ hover === 'Enter Miles' ? classes.active : classes.individualTab } onClick={ () => setTab('Enter Miles') } onMouseEnter={ () => setHover('Enter Miles')}>
-                    Enter Miles
-                </div>
+                <SelectButton className='p-button-danger' value={ tab } options={ tabs } onChange={ (e) => { setTab(e.value) } }/>
             </div>
             <div id={ classes.content }>
                 { base }

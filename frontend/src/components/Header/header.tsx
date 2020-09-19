@@ -6,6 +6,7 @@ import {
     Button
   } from 'reactstrap';
 
+import logo from '../../assets/vtseva-logo.png';
 import classes from './header.module.css'
 
 export default () => {
@@ -14,7 +15,7 @@ export default () => {
       <Navbar color="primary" light expand="md">
         <NavbarBrand>
           <Link to='/'>
-            <span className={ classes.navbarText }>Walk-a-thon</span>
+            <img id={ classes.logo } src={ logo } alt='logo' />
           </Link>
         </NavbarBrand>
         <div className= { classes.register }>  

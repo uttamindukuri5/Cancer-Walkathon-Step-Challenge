@@ -4,18 +4,15 @@ import { Column } from 'primereact/column';
 
 interface IProps {
     data: any[];
+    viewTeam: boolean;
 }
-export default ({ data }: IProps) => {
-    
-
+export default ({ data, viewTeam }: IProps) => {
     return (
         <div>
-            <div className="card">
-                <DataTable value={data}>
-                    <Column field="teamName" header="Team"></Column>
-                    <Column field="totalMiles" header="Miles"></Column>
-                </DataTable>
-            </div>
+            <DataTable value={data}>
+                <Column field={viewTeam ? 'teamName' : 'date' } header={ viewTeam ? 'Team' : 'Date' }></Column>
+                <Column field={viewTeam ? 'totalMiles' : 'miles'} header="Miles"></Column>
+            </DataTable>
         </div>
     );
 }

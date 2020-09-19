@@ -29,7 +29,12 @@ export default () => {
             miles: mile
         };
 
-        console.log(track);
+        if (mile > 25) {
+            //@ts-ignore
+            messages.current.show({ severity: 'error', summary: 'Mile limit exceeded', detail: 'You can have a max of 25 miles' });
+            resetValue();
+            return;
+        }
 
         submitData(track);
 
@@ -61,8 +66,7 @@ export default () => {
                 messages.current.show({ severity: 'success', summary: 'Miles Saves', detail: 'Your miles have been successfully saved' });
             }
         } catch (e) {
-            console.log('hello');
-            console.error(e);
+            console.log(e);
         }
         
     }
@@ -81,7 +85,7 @@ export default () => {
             </div>
             <div className={ classes.section }>
                 <label className={ classes.text }><strong>Mile: </strong></label>
-                <InputText value={ mile } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setMile(parseInt(target.value)) }/>
+                <InputText value={ mile === 0 ? '' : mile } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setMile(parseInt(target.value)) }/>
             </div>
             <div id={ classes.submitButton } className={ classes.section }>
                 <Button label='Track Mile' className='p-button-success' onClick={ submit  }/>

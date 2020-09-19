@@ -44,7 +44,7 @@ export default ({data}: IProps) => {
 
     return(
         <div>
-            <Chart type="horizontalBar" data={basicData} options={ basicOptions }/>
+            <Chart type="bar" data={basicData} options={ basicOptions }/>
         </div>
     );
 }

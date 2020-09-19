@@ -23,4 +23,31 @@ router.get('/teams', async(req, res, next) => {
     return res.status(200).send(teamList);
 });
 
+router.get('/totalUsers', async(req, res, next) => {
+    const users = await User.find({});
+
+    return res.status(200).send({ totalUsers: users.length });
+});
+
+router.post('/user', async(req, res, next) => {
+    const phone = req.body.phone;
+
+    const userMiles = await MileTracker.find({ phone: phone });
+
+    if (!userMiles || userMiles.length === 0) {
+        return res.status(404).send({ error: 'User does not exist or no miles entered, either register or start entering miles' });
+    }
+
+    const response = [];
+    userMiles.forEach(user => {
+        const data = {
+            miles: user.miles,
+            date: user.date
+        };
+        response.push(data);
+    });
+
+    return res.status(201).send(response);
+})
+
 module.exports = router;
