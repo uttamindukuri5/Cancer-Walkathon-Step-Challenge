@@ -1,0 +1,45 @@
+.data {
+    width: 75rem; 
+    margin: 75px;
+}
+
+#heading {
+    font-size: 5rem;
+}
+
+.tab {
+    margin-top: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.individualTab {
+    display: flex; 
+    padding: 50px;
+    padding-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 1px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.active {
+    display: flex; 
+    padding: 50px;
+    padding-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 1px;
+    font-size: 2rem;
+    cursor: pointer;
+    border-bottom: 2px solid blue;
+}
+
+#content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}

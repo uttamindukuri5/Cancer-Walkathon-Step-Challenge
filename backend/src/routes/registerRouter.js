@@ -8,6 +8,12 @@ const router = express.Router();
 router.post('/user', async (req, res, next) => {
     const newUser = req.body.user;
 
+    const exisitingUser = await User.findOne({ phone: newUser.phone });
+
+    if (exisitingUser) {
+        return res.status(400).send({ message: 'This user has been registered. Please log in with a different phone number' });
+    }
+
     const user = new User({
         firstName: newUser.firstName,
         lastName: newUser.lastName,
@@ -16,6 +22,7 @@ router.post('/user', async (req, res, next) => {
         team: newUser.team,
         miles: 0
     });
+
     await user.save();
 
     res.status(201).send({ id: user._id });

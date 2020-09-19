@@ -3,7 +3,8 @@
 }
 
 #form {
-    border-radius: 20px;
+    background-color: white;
+    border-radius: 10px;
     display: inline-flex;
     justify-content: space-between;
     flex-direction: column;
@@ -24,4 +25,12 @@
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+#content {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, rgba(150, 149, 151, 0.541), rgba(163, 162, 163, 0.79)), url('../../assets//background-img.jpg') no-repeat center center fixed;
 }

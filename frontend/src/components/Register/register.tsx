@@ -2,16 +2,16 @@ import React, { useState, useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
-import { Messages } from 'primereact/messages';
+import { Toast } from 'primereact/toast';
 
 import classes from './register.module.css';
 
 export default () => {
     const teams = [
-        'team 1', 
-        'team 2',
-        'team 3',
-        'team 4'
+        'team_1', 
+        'team_2',
+        'team_3',
+        'team_4'
     ];
     const 
         messages = useRef(null),
@@ -25,6 +25,18 @@ export default () => {
             lastName: false,
             phone: false
         });
+
+    const resetValue = () => {
+        setFirstName('');
+        setLastName('');
+        setPhone('');
+        setEmail('');
+        setTouched({
+            firstName: false,
+            lastName: false,
+            phone: false
+        });
+    }
     
     const submit = (): void => {
         const user = {
@@ -41,6 +53,9 @@ export default () => {
             //@ts-ignore
             messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please fill the required field'});
         }
+
+        resetValue();
+        
     }
 
     const submitData = async (user: any) => {
@@ -50,7 +65,7 @@ export default () => {
                 lastName: user.lastName,
                 phone: user.phone,
                 email: user.email,
-                team: user.team
+                team: user.selectedTeam
             }
         };
         const data = await fetch('http://localhost:4000/register/user', { 
@@ -61,7 +76,13 @@ export default () => {
             body: JSON.stringify(response)
          });
 
-         console.log(data);
+         if (data.status === 400) {
+             // @ts-ignore
+             messages.current.show({ severity: 'error', summary: 'User Already Registered', detail: 'Please provide a different phone number' });
+         } else {
+             // @ts-ignore
+             messages.current.show({ severity: 'success', summary: 'Successfully Registerd', detail: 'Congratulations, you have been successfully registered' });
+         }
     }
 
     const validatePhone = (phone: string): boolean => {
@@ -70,56 +91,58 @@ export default () => {
     }
 
     return (
-        <div id={ classes.form }>
-            <Messages ref={ messages } />
-            <div className={ classes.section }>
-                <label className={ classes.text }><strong>First Name: </strong></label>
-                <InputText 
-                    value={ firstName } 
-                    onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setFirstName(target.value) } 
-                    required={ true }
-                    onClick={ () => setTouched({ ...touched, firstName: true }) }
-                    className={ touched.firstName ? ( firstName.trim().length > 1 ? '' : 'p-invalid') : '' }
-                />
+        <div id={ classes.content }>
+            <div id={ classes.form }>
+                <Toast ref={ messages } />
+                <div className={ classes.section }>
+                    <label className={ classes.text }><strong>First Name: </strong></label>
+                    <InputText 
+                        value={ firstName } 
+                        onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setFirstName(target.value) } 
+                        required={ true }
+                        onClick={ () => setTouched({ ...touched, firstName: true }) }
+                        className={ touched.firstName ? ( firstName.trim().length > 1 ? '' : 'p-invalid') : '' }
+                    />
+                </div>
+                <div className={ classes.section }>
+                    <label className={ classes.text }><strong>Last Name: </strong></label>
+                    <InputText 
+                        value={ lastName } 
+                        onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setLastName(target.value) }
+                        required={ true }
+                        onClick={ () => setTouched({ ...touched, lastName: true }) }
+                        className={ touched.lastName ? ( lastName.trim().length > 1 ? '' : 'p-invalid' ) : '' }
+                    />
+                </div>
+                <div className={ classes.section }>
+                    <label className={ classes.text }><strong>Phone: </strong></label>
+                    <InputText 
+                        value={ phone } 
+                        onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setPhone(target.value) }
+                        required={ true }
+                        onClick={ () => setTouched({ ...touched, phone: true }) }
+                        className={ touched.phone ? ( validatePhone(phone) ? '' : 'p-invalid' ) : '' }
+                    />
+                </div>
+                <div className={ classes.section }>
+                    <label className={ classes.text }><strong>Email (Optional): </strong></label>
+                    <InputText value={ email } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setEmail(target.value) }/>
+                </div>
+                <div className={ classes.section }>
+                    <label className={ classes.text }><strong>Team Name: </strong></label>
+                    <Dropdown 
+                        id={ classes.dropdown }
+                        value={selectedTeam} 
+                        options={teams} onChange={(e) => setSelectedTeam(e.target.value)} 
+                        filter 
+                        showClear
+                        placeholder="Select a Team"
+                    />
+                </div>
+                <div id={ classes.submitButton } className={ classes.section }>
+                    <Button label='Register User' className='p-button-success' onClick={ submit  }/>
+                </div> 
             </div>
-            <div className={ classes.section }>
-                <label className={ classes.text }><strong>Last Name: </strong></label>
-                <InputText 
-                    value={ lastName } 
-                    onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setLastName(target.value) }
-                    required={ true }
-                    onClick={ () => setTouched({ ...touched, lastName: true }) }
-                    className={ touched.lastName ? ( lastName.trim().length > 1 ? '' : 'p-invalid' ) : '' }
-                />
-            </div>
-            <div className={ classes.section }>
-                <label className={ classes.text }><strong>Phone: </strong></label>
-                <InputText 
-                    value={ phone } 
-                    onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setPhone(target.value) }
-                    required={ true }
-                    onClick={ () => setTouched({ ...touched, phone: true }) }
-                    className={ touched.phone ? ( validatePhone(phone) ? '' : 'p-invalid' ) : '' }
-                />
-            </div>
-            <div className={ classes.section }>
-                <label className={ classes.text }><strong>Email (Optional): </strong></label>
-                <InputText value={ email } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setEmail(target.value) }/>
-            </div>
-            <div className={ classes.section }>
-                <label className={ classes.text }><strong>Team Name: </strong></label>
-                <Dropdown 
-                    id={ classes.dropdown }
-                    value={selectedTeam} 
-                    options={teams} onChange={(e) => setSelectedTeam(e.target.value)} 
-                    filter 
-                    showClear
-                    placeholder="Select a Team"
-                />
-            </div>
-            <div id={ classes.submitButton } className={ classes.section }>
-                <Button label='Register User' className='p-button-success' onClick={ submit  }/>
-            </div> 
         </div>
     ); 
 }

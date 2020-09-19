@@ -6,11 +6,11 @@ const router = express.Router();
 
 router.get('/teams', async(req, res, next) => {
     const users = await User.find({});
-    console.log(users);
     
     const teamList = [];
     for (let user of users) {
-        if (!teamList[user.team]) {
+        const existingTeam = teamList.findIndex(team => team.teamName === user.team);
+        if (existingTeam === -1) {
             const teamData = {
                 teamName: user.team,
                 totalMiles: user.miles
@@ -18,7 +18,7 @@ router.get('/teams', async(req, res, next) => {
             teamList.push(teamData);
         }
         else
-            teamList[user.team].totalMiles += user.miles;
+            teamList[existingTeam].totalMiles += user.miles;
     }
     return res.status(200).send(teamList);
 });

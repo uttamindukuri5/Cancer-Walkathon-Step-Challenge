@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
 
 import classes from './registerMile.module.css';
 
 export default () => {
-    const today = new Date();
+    const 
+        today = new Date(),
+        messages = useRef(null);
+
     const 
         [ date, setDate ] = useState(today),
         [ phone, setPhone ] = useState(''),
         [ mile, setMile ] = useState(0);
+
+
+    const resetValue = () => {
+        setPhone('');
+        setMile(0);
+    }
 
     const submit = () => {
         const track = {
@@ -22,6 +32,8 @@ export default () => {
         console.log(track);
 
         submitData(track);
+
+        resetValue();
     };
 
     const submitData = async(track: any) => {
@@ -42,7 +54,11 @@ export default () => {
             });
 
             if (data.status === 400) {
-                console.log('User does not exist');
+                // @ts-ignore
+                messages.current.show({ severity: 'error', summary: 'User Not Found', detail: 'This phone number does not exist, please go to register page to enter your miles.' });
+            } else {
+                // @ts-ignore
+                messages.current.show({ severity: 'success', summary: 'Miles Saves', detail: 'Your miles have been successfully saved' });
             }
         } catch (e) {
             console.log('hello');
@@ -54,6 +70,7 @@ export default () => {
 
     return (
         <div id={ classes.form }>
+            <Toast ref={ messages }/>
             <div className={ classes.section }>
                 <label className={ classes.text }><strong>Phone: </strong></label>
                 <InputText value={ phone } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setPhone(target.value) }/>

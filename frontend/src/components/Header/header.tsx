@@ -12,7 +12,11 @@ export default () => {
 
     return (
       <Navbar color="primary" light expand="md">
-        <NavbarBrand><span className={ classes.navbarText }>Walk-a-thon</span></NavbarBrand>
+        <NavbarBrand>
+          <Link to='/'>
+            <span className={ classes.navbarText }>Walk-a-thon</span>
+          </Link>
+        </NavbarBrand>
         <div className= { classes.register }>  
           <Link to='/register'>
             <Button color="danger"><span>Register</span></Button>
