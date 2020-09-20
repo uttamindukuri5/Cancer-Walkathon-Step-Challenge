@@ -97,7 +97,7 @@ export default () => {
             </div>
             <span className="p-tag p-tag-warning">Note: 2000 steps = 1 mile and 0.6km = 1 mile</span>
             <div id={ classes.submitButton } className={ classes.section }>
-                <Button label='Track Mile' className='p-button-success' onClick={ submit  }/>
+                <Button label='Track Miles' className='p-button-success' onClick={ submit }/>
             </div> 
         </div>
     );
