@@ -10,30 +10,17 @@ export default () => {
     const 
         messages = useRef(null),
         [ data, setData ]: any[] = useState([]),
-        [ phone, setPhone ] = useState(''),
+        [ userId, setUserId ] = useState(''),
         [ totalMiles, setTotalMiles ] = useState(0); 
 
-    const validatePhone = (phone: string): boolean => {
-        const phoneRegex = /([2-9]\d{9})|([2-9]\d{2}-\d{3}-\d{4})/;
-        return phoneRegex.test(phone);
-    }
-
     const submit = () => {
-        if (!validatePhone(phone)) {
-            //@ts-ignore
-            messages.current.show({ severity: 'error', summary: 'Invalid Phone Number', detail: 'Please enter the correct phone number EX: (2142345678 or 214-234-5678' });
-            setPhone('');
-            return;
-        }
-
-        submitData(phone);
-
-        setPhone('');
+        submitData(userId);
+        setUserId('');
     };
 
-    const submitData = async(phone: string) => {
+    const submitData = async(userId: string) => {
         const request = {
-            phone: phone
+            userId: userId
         }
         try {
             const response = await fetch('http://localhost:4000/user', {
@@ -46,7 +33,7 @@ export default () => {
 
             if (response.status === 404 || response.status === 400) {
                 // @ts-ignore
-                messages.current.show({ severity: 'error', summary: 'User Not Found', detail: 'This phone number does not exist, please go to register page to enter your miles.' });
+                messages.current.show({ severity: 'error', summary: 'User Not Found', detail: 'This user ID does not exist, please go to register page to enter your miles.' });
             } else {
                 const data = await response.json();
                 formatData(data);
@@ -93,8 +80,8 @@ export default () => {
             <Toast ref={ messages } />
             <div id={ classes.form }>
                 <div className={ classes.section }>
-                    <label className={ classes.text }><strong>Phone: </strong></label>
-                    <InputText value={ phone } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setPhone(target.value) }/>
+                    <label className={ classes.text }><strong>User ID: </strong></label>
+                    <InputText value={ userId } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setUserId(target.value) }/>
                 </div>
                 <div id={ classes.submitButton } className={ classes.section }>
                     <Button label='Track Miles' className='p-button-success' onClick={ submit  }/>

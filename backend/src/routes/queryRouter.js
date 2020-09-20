@@ -30,9 +30,9 @@ router.get('/totalUsers', async(req, res, next) => {
 });
 
 router.post('/user', async(req, res, next) => {
-    const phone = req.body.phone;
+    const userId = req.body.userId;
 
-    const userMiles = await MileTracker.find({ phone: phone });
+    const userMiles = await MileTracker.find({ userId: userId });
 
     if (!userMiles || userMiles.length === 0) {
         return res.status(404).send({ error: 'User does not exist or no miles entered, either register or start entering miles' });
@@ -48,6 +48,23 @@ router.post('/user', async(req, res, next) => {
     });
 
     return res.status(201).send(response);
-})
+});
+
+router.get('/listUsers', async(req, res, next) => {
+    const users = await User.find({});
+
+    const response = [];
+
+    users.forEach(user => {
+        response.push({
+            userId: user.userId,
+            name: `${ user.firstName } ${ user.lastName }`,
+            team: user.team,
+            miles: user.miles
+        });
+    });
+
+    res.status(200).send(response);
+});
 
 module.exports = router;

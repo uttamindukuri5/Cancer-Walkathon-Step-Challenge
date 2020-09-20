@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { SelectButton } from 'primereact/selectbutton';
 
 import Chart from '../Chart/chart';
 import Table from '../Table/table';
 import RegisterMile from '../RegisterMile/registerMile';
 import ViewMile from '../ViewMile/viewMile';
+import ViewUsers from '../ViewUsers/viewUsers';
 import classes from './home.module.css';
 
 export default () => {
 
     const
-        tabs = ['Dashboard', 'Enter Miles', 'View Your Miles'],
+        history = useHistory(),
+        tabs = ['Dashboard', 'Register', 'Enter Miles', 'View Miles', 'Walkers'],
         [teams, setTeams]: any[] = useState([]),
         [numUsers, setNumUsers] = useState(0),
         [tab, setTab] = useState(tabs[0]);
@@ -51,6 +54,15 @@ export default () => {
         totalMiles += team.totalMiles;
     });
 
+    const changeTab = (value: string) => {
+        if (value === null) {
+            return;
+        }
+        if (value !== tab) {
+            setTab(value);
+        }
+    }
+
     let base; 
 
     if (tab === 'Enter Miles') {
@@ -64,6 +76,10 @@ export default () => {
                     <div className={classes.info + ' p-mb-2 p-mr-2'}>
                         <h4>Total Miles</h4>
                         <h2 className={ classes.heading }>{ totalMiles }</h2>
+                    </div>
+                    <div className={classes.info + ' p-mb-2 p-mr-2'}>
+                        <h4>Target Goal</h4>
+                        <h2 className={ classes.heading }>10,000</h2>
                     </div>
                     <div className={classes.info + ' p-mb-2 p-mr-2'}>
                         <h4>Total Registrants</h4>
@@ -85,16 +101,22 @@ export default () => {
                 </div>
             </div>
         );
-    } else {
-        base =(
+    } else if (tab === 'View Miles'){
+        base = (
             <ViewMile />
+        );
+    } else if (tab === 'Register') {
+        history.push('/register');
+    } else if (tab === 'Walkers') {
+        base = (
+            <ViewUsers />
         );
     }
 
     return (
         <div>
             <div className={ classes.tab }>
-                <SelectButton className='p-button-danger' value={ tab } options={ tabs } onChange={ (e) => { setTab(e.value) } }/>
+                <SelectButton className='p-button-danger' value={ tab } options={ tabs } onChange={ (e) => { changeTab(e.value) } }/>
             </div>
             <div id={ classes.content }>
                 { base }

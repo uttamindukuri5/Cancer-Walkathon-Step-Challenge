@@ -13,18 +13,19 @@ export default () => {
 
     const 
         [ date, setDate ] = useState(today),
-        [ phone, setPhone ] = useState(''),
+        [ userId, setUserId ] = useState(''),
         [ mile, setMile ] = useState(0);
 
 
     const resetValue = () => {
-        setPhone('');
+        setUserId('');
         setMile(0);
     }
 
     const submit = () => {
+        const today = new Date();
         const track = {
-            phone,
+            userId,
             date,
             miles: mile
         };
@@ -32,6 +33,13 @@ export default () => {
         if (mile > 25) {
             //@ts-ignore
             messages.current.show({ severity: 'error', summary: 'Mile limit exceeded', detail: 'You can have a max of 25 miles' });
+            resetValue();
+            return;
+        }
+
+        if (date > today) {
+            //@ts-ignore
+            messages.current.show({ severity: 'error', summary: 'Date Not Valid', detail: 'Cannot enter future date' });
             resetValue();
             return;
         }
@@ -44,7 +52,7 @@ export default () => {
     const submitData = async(track: any) => {
         const response = {
             tracker: {
-                phone: track.phone,
+                userId: track.userId,
                 date: track.date,
                 miles: track.miles
             }
@@ -58,9 +66,9 @@ export default () => {
                 body: JSON.stringify(response)
             });
 
-            if (data.status === 400) {
+            if (data.status === 404 || data.status === 400) {
                 // @ts-ignore
-                messages.current.show({ severity: 'error', summary: 'User Not Found', detail: 'This phone number does not exist, please go to register page to enter your miles.' });
+                messages.current.show({ severity: 'error', summary: 'User Not Found', detail: 'This user ID does not exist, please go to register page to enter your miles.' });
             } else {
                 // @ts-ignore
                 messages.current.show({ severity: 'success', summary: 'Miles Saves', detail: 'Your miles have been successfully saved' });
@@ -76,17 +84,18 @@ export default () => {
         <div id={ classes.form }>
             <Toast ref={ messages }/>
             <div className={ classes.section }>
-                <label className={ classes.text }><strong>Phone: </strong></label>
-                <InputText value={ phone } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setPhone(target.value) }/>
+                <label className={ classes.text }><strong>User ID: </strong></label>
+                <InputText value={ userId } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setUserId(target.value) }/>
             </div>
             <div className={ classes.section }>
                 <label className={ classes.text }><strong>Date: </strong></label>
                 <Calendar value={date} onChange={(e) => setDate(e.value as Date) }></Calendar>
             </div>
             <div className={ classes.section }>
-                <label className={ classes.text }><strong>Mile: </strong></label>
-                <InputText value={ mile === 0 ? '' : mile } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setMile(parseInt(target.value)) }/>
+                <label className={ classes.text }><strong>Miles: </strong></label>
+                <InputText value={ mile === 0 ? '' : (isNaN(mile) ? '' : mile) } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setMile(parseInt(target.value)) }/>
             </div>
+            <span className="p-tag p-tag-warning">Note: 2000 steps = 1 mile and 0.6km = 1 mile</span>
             <div id={ classes.submitButton } className={ classes.section }>
                 <Button label='Track Mile' className='p-button-success' onClick={ submit  }/>
             </div> 

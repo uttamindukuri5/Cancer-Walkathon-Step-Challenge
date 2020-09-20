@@ -1,57 +1,103 @@
 import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
+import { Captcha } from 'primereact/captcha';
 
 import classes from './register.module.css';
 
 export default () => {
     const teams = [
-        'team_1', 
-        'team_2',
-        'team_3',
-        'team_4'
+        'Plano/ Richardson', 
+        'Frisco/ Prosper',
+        'Irving/ Coppel',
+        'Non-Dallas',
+        'India'
     ];
     const 
+        SITE_KEY = '6Lenhc4ZAAAAAG9-M_NTzCtMq0faInT6yp0PjXGH',
         messages = useRef(null),
         [selectedTeam, setSelectedTeam] = useState(teams[0]),
         [ firstName, setFirstName ] = useState(''),
         [ lastName, setLastName ] = useState(''),
+        [ userId, setUserId ] = useState(''),
         [ phone, setPhone ] = useState(''),
         [ email, setEmail ] = useState(''),
+        [ isHuman, setIsHuman ] = useState(false),
         [ touched, setTouched ] = useState({
             firstName: false,
             lastName: false,
-            phone: false
+            userId: false,
+            phone: false,
+            email: false
         });
 
     const resetValue = () => {
         setFirstName('');
         setLastName('');
+        setUserId('');
         setPhone('');
         setEmail('');
         setTouched({
             firstName: false,
             lastName: false,
-            phone: false
+            userId: false,
+            phone: false,
+            email: false,
         });
     }
+
+    const verifyCaptcha = async (res: any) => {
+        const captchaRequestData = {
+            humanKey: res.response
+        }
+
+        const response = await fetch('http://localhost:4000/register/captcha', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(captchaRequestData)
+        });
+
+        if (response.status === 200) {
+            setIsHuman(true);
+        } else {
+            setIsHuman(false);
+        }
+    };
     
     const submit = (): void => {
         const user = {
             firstName,
             lastName,
+            userId,
             phone, 
             email,
             selectedTeam
         };
 
-        if (firstName.trim().length > 1 && lastName.trim().length > 1 && validatePhone(phone)) {
+        if (firstName.trim().length > 1 && lastName.trim().length > 1 && validatePhone(phone) && validateEmail(email)) {
             submitData(user);
         } else {
-            //@ts-ignore
-            messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please fill the required field'});
+            if (firstName.trim().length < 1) {
+                //@ts-ignore
+                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please fill in the first name'});
+            }
+            else if (lastName.trim().length < 1) {
+                //@ts-ignore
+                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please fill in the last name'});
+            }
+            else if (!validatePhone(phone)) {
+                //@ts-ignore
+                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid phone number'});
+            }
+            else if (!validateEmail(email)) {
+                //@ts-ignore
+                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid email'});
+            }
         }
 
         resetValue();
@@ -63,6 +109,7 @@ export default () => {
             user: { 
                 firstName: user.firstName,
                 lastName: user.lastName,
+                userId: user.userId,
                 phone: user.phone,
                 email: user.email,
                 team: user.selectedTeam
@@ -78,7 +125,7 @@ export default () => {
 
          if (data.status === 400) {
              // @ts-ignore
-             messages.current.show({ severity: 'error', summary: 'User Already Registered', detail: 'Please provide a different phone number' });
+             messages.current.show({ severity: 'error', summary: 'User Already Registered', detail: 'Please provide a different user ID' });
          } else {
              // @ts-ignore
              messages.current.show({ severity: 'success', summary: 'Successfully Registerd', detail: 'Congratulations, you have been successfully registered' });
@@ -88,6 +135,15 @@ export default () => {
     const validatePhone = (phone: string): boolean => {
         const phoneRegex = /([2-9]\d{9})|([2-9]\d{2}-\d{3}-\d{4})/;
         return phoneRegex.test(phone);
+    }
+
+    const validateEmail = (email: string): boolean => {
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        return emailRegex.test(email);
+    }
+
+    const validateUserId = (userId: string): boolean => {
+        return userId.trim().length > 0 && userId.trim().length < 21;
     }
 
     return (
@@ -115,6 +171,16 @@ export default () => {
                     />
                 </div>
                 <div className={ classes.section }>
+                    <label className={ classes.text }><strong>User ID: </strong></label>
+                    <InputText 
+                        value={ userId } 
+                        onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setUserId(target.value) }
+                        required={ true }
+                        onClick={ () => setTouched({ ...touched, userId: true }) }
+                        className={ touched.userId ? ( validateUserId(userId) ? '' : 'p-invalid' ) : '' }
+                    />
+                </div>
+                <div className={ classes.section }>
                     <label className={ classes.text }><strong>Phone: </strong></label>
                     <InputText 
                         value={ phone } 
@@ -125,8 +191,14 @@ export default () => {
                     />
                 </div>
                 <div className={ classes.section }>
-                    <label className={ classes.text }><strong>Email (Optional): </strong></label>
-                    <InputText value={ email } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setEmail(target.value) }/>
+                    <label className={ classes.text }><strong>Email: </strong></label>
+                    <InputText 
+                        value={ email } 
+                        onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setEmail(target.value) }
+                        required={ true }
+                        onClick={ ()=> setTouched({ ...touched, email: true }) }
+                        className={ touched.email ? ( validateEmail(email) ? '' : 'p-invalid' ) : '' }
+                    />
                 </div>
                 <div className={ classes.section }>
                     <label className={ classes.text }><strong>Team Name: </strong></label>
@@ -139,8 +211,18 @@ export default () => {
                         placeholder="Select a Team"
                     />
                 </div>
+                <div className={ classes.section }>
+                    <Captcha siteKey={ SITE_KEY } onResponse={ verifyCaptcha }/>
+                </div>
                 <div id={ classes.submitButton } className={ classes.section }>
-                    <Button label='Register User' className='p-button-success' onClick={ submit  }/>
+                    <div className={ classes.formButton }>
+                        <Link to='/'>
+                            <Button label='Home' className='p-button-primary'/>
+                        </Link>
+                    </div>
+                    <div className={ classes.formButton }>
+                        <Button label='Register User' className='p-button-success' onClick={ submit  } disabled={ !isHuman }/>
+                    </div>
                 </div> 
             </div>
         </div>
