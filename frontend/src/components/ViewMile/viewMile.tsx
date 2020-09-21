@@ -20,7 +20,7 @@ export default () => {
 
     const submitData = async(userId: string) => {
         const request = {
-            userId: userId
+            userId: userId.toLowerCase()
         }
         try {
             const response = await fetch('http://localhost:4000/user', {

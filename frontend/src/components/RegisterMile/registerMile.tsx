@@ -25,7 +25,7 @@ export default () => {
     const submit = () => {
         const today = new Date();
         const track = {
-            userId,
+            userId: userId.toLowerCase(),
             date,
             miles: mile
         };
