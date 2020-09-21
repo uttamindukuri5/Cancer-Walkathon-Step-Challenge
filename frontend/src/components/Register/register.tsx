@@ -54,7 +54,7 @@ export default () => {
             humanKey: res.response
         }
 
-        const response = await fetch('http://localhost:4000/register/captcha', {
+        const response = await fetch('http://ec2-18-191-61-77.us-east-2.compute.amazonaws.com:4000/register/captcha', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -115,7 +115,7 @@ export default () => {
                 team: user.selectedTeam
             }
         };
-        const data = await fetch('http://localhost:4000/register/user', { 
+        const data = await fetch('http://ec2-18-191-61-77.us-east-2.compute.amazonaws.com:4000/register/user', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

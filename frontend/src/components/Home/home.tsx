@@ -19,12 +19,12 @@ export default () => {
         [tab, setTab] = useState(tabs[0]);
 
     const fetchData = async () => {
-        const response = await fetch('http://localhost:4000/teams'); 
+        const response = await fetch('http://ec2-18-191-61-77.us-east-2.compute.amazonaws.com:4000/teams'); 
         return await response.json();
     };
 
     const fetchUsers = async () => {
-        const response = await fetch('http://localhost:4000/totalUsers');
+        const response = await fetch('http://ec2-18-191-61-77.us-east-2.compute.amazonaws.com:4000/totalUsers');
         return await response.json();
     }
 

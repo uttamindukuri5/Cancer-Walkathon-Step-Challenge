@@ -58,7 +58,7 @@ export default () => {
             }
         };
         try {
-            const data = await fetch('http://localhost:4000/register/mile', {
+            const data = await fetch('http://ec2-18-191-61-77.us-east-2.compute.amazonaws.com:4000/register/mile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
