@@ -79,7 +79,7 @@ export default () => {
             selectedTeam
         };
 
-        if (firstName.trim().length > 1 && lastName.trim().length > 1 && validatePhone(phone) && validateEmail(email)) {
+        if (firstName.trim().length > 1 && lastName.trim().length > 1 && validatePhone(phone) && validateEmail(email) && validateUserId(userId)) {
             submitData(user);
         } else {
             if (firstName.trim().length < 1) {
@@ -97,6 +97,10 @@ export default () => {
             else if (!validateEmail(email)) {
                 //@ts-ignore
                 messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid email'});
+            }
+            else if (!validateUserId(userId)) {
+                //@ts-ignore
+                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid user ID'});
             }
         }
 
