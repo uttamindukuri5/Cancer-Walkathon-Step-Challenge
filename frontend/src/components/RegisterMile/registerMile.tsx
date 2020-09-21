@@ -29,10 +29,10 @@ export default () => {
             date,
             miles: mile
         };
-
-        if (mile > 25) {
+        console.log(mile);
+        if (mile >= 21) {
             //@ts-ignore
-            messages.current.show({ severity: 'error', summary: 'Mile limit exceeded', detail: 'You can have a max of 25 miles' });
+            messages.current.show({ severity: 'error', summary: 'Mile limit exceeded', detail: 'You can have a max of 20 miles' });
             resetValue();
             return;
         }
