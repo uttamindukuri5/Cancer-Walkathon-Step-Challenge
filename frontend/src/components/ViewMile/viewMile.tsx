@@ -23,7 +23,7 @@ export default () => {
             userId: userId.toLowerCase()
         }
         try {
-            const response = await fetch('http://localhost:4000/user', {
+            const response = await fetch('http://ec2-3-137-200-96.us-east-2.compute.amazonaws.com:4000/user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
