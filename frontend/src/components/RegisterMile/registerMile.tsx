@@ -97,7 +97,7 @@ export default () => {
                 <label className={ classes.text }><strong>Miles: </strong></label>
                 <InputNumber value={ mile } onValueChange={ (e) => setMile(e.value) } mode='decimal' minFractionDigits={ 2 } maxFractionDigits={ 2 }/>
             </div>
-            <span className="p-tag p-tag-warning">Note: 2000 steps = 1 mile and 0.6km = 1 mile</span>
+            <span className="p-tag p-tag-warning">Note: 2000 steps = 1 mile and 1km = 0.62 mile</span>
             <div id={ classes.submitButton } className={ classes.section }>
                 <Button label='Track Miles' className='p-button-success' onClick={ submit }/>
             </div> 
