@@ -31,21 +31,24 @@ export default () => {
                 date,
                 miles: mile
             };
-            if (mile >= 21) {
+
+            if (mile <= 0.00 && mile >= 21) {
                 //@ts-ignore
-                messages.current.show({ severity: 'error', summary: 'Mile limit exceeded', detail: 'You can have a max of 20 miles' });
-                resetValue();
+                messages.current.show({ severity: 'error', summary: 'Mile Error', detail: 'Please enter a mile that is greater than 0 and less than or equal to 20' });
                 return;
             }
     
             if (date > today) {
                 //@ts-ignore
                 messages.current.show({ severity: 'error', summary: 'Date Not Valid', detail: 'Cannot enter future date' });
-                resetValue();
                 return;
             }
     
             submitData(track);
+        } else {
+            //@ts-ignore
+            messages.current.show({ severity: 'error', summary: 'Mile Error', detail: 'Please enter a mile between 0.01 to 20.00 miles' });
+            return;
         }
 
         resetValue();
@@ -97,7 +100,7 @@ export default () => {
                 <label className={ classes.text }><strong>Miles: </strong></label>
                 <InputNumber value={ mile } onValueChange={ (e) => setMile(e.value) } mode='decimal' minFractionDigits={ 2 } maxFractionDigits={ 2 }/>
             </div>
-            <span className="p-tag p-tag-warning">Note: 2000 steps = 1 mile and 1km = 0.62 mile</span>
+            <span className="p-tag p-tag-warning">Note: 2000 steps = 1 mile and 1 km = 0.62 mile</span>
             <div id={ classes.submitButton } className={ classes.section }>
                 <Button label='Track Miles' className='p-button-success' onClick={ submit }/>
             </div> 

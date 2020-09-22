@@ -30,7 +30,7 @@ export default () => {
 
     const getRemainingDays = (): number => {
         const
-            endDate = new Date("10/20/2020"),
+            endDate = new Date("10/25/2020"),
             currentDate = new Date(),
             timeDifference = endDate.getTime() - currentDate.getTime(),
             daysDifference = timeDifference / (1000 * 3600 * 24); 
