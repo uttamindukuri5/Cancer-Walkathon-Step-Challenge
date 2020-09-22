@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
+import { InputNumber } from 'primereact/inputnumber';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
@@ -93,7 +94,7 @@ export default () => {
             </div>
             <div className={ classes.section }>
                 <label className={ classes.text }><strong>Miles: </strong></label>
-                <InputText value={ mile === 0 ? '' : (isNaN(mile) ? '' : mile) } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setMile(parseInt(target.value)) }/>
+                <InputNumber value={ mile } onValueChange={ (e) => setMile(e.value.toFixed(2)) } mode='decimal' minFractionDigits={ 2 } maxFractionDigits={ 2 }/>
             </div>
             <span className="p-tag p-tag-warning">Note: 2000 steps = 1 mile and 0.6km = 1 mile</span>
             <div id={ classes.submitButton } className={ classes.section }>
