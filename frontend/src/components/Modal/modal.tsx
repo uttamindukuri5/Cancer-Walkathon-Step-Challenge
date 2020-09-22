@@ -1,6 +1,5 @@
 import React from 'react';
 import { Dialog } from 'primereact/dialog';
-import userEvent from '@testing-library/user-event';
 
 interface IProps {
     data: any;

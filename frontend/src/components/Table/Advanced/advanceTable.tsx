@@ -26,7 +26,7 @@ export default ({ data, setModal, setUser }: IProps) => {
     return (
         <div>
             <DataTable value={ data } className='p-datatable-responsive-demo'>
-                <Column field='userId' header='ID' sortable />
+                <Column field='userId' header='User ID' sortable />
                 <Column field='miles' header='Miles' sortable />
                 <Column field='userId' body={ (userId: string) => viewInfo(userId) } header="Action" />
             </DataTable>
