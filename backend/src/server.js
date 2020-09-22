@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const https = require('https');
+const fs = require('fs');
 const cors = require('cors');
 
 const registrationRouter = require('./routes/registerRouter');
@@ -15,7 +17,10 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
     app.use(bodyParser.json());
     app.use('/', queryRouter);
     app.use('/register', registrationRouter);
-    app.listen(4000, () => {
+    https.createServer({
+        key: fs.readFileSync('../../../../../../etc/letsencrypt/live/www.vtwalk.org/privkey.pem'),
+        cert: fs.readFileSync('../../../../../../etc/letsencrypt/live/www.vtwalk.org/fullchain.pem')
+    }, app).listen(4000, () => {
         console.log('Server has started in port 4000');
     });
 })

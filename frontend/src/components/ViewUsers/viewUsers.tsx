@@ -11,7 +11,7 @@ export default () => {
         [ hideModal, setHideModal ] = useState(false);
 
     const fetchData = async() => {
-        const response = await fetch('http://ec2-18-191-61-77.us-east-2.compute.amazonaws.com:4000/listUsers');
+        const response = await fetch('https://vtwalk.org:4000/listUsers');
         return await response.json();
     };
 
