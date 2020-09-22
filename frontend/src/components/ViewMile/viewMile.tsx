@@ -20,7 +20,7 @@ export default () => {
 
     const submitData = async(userId: string) => {
         const request = {
-            userId: userId
+            userId: userId.toLowerCase()
         }
         try {
             const response = await fetch('http://ec2-18-191-61-77.us-east-2.compute.amazonaws.com:4000/user', {

@@ -73,7 +73,7 @@ export default () => {
         const user = {
             firstName,
             lastName,
-            userId,
+            userId: userId.toLowerCase(),
             phone, 
             email,
             selectedTeam
@@ -89,6 +89,10 @@ export default () => {
             else if (lastName.trim().length < 1) {
                 //@ts-ignore
                 messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please fill in the last name'});
+            }
+            else if (!validateUserId(userId)) {
+                //@ts-ignore
+                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid user ID'});
             }
             else if (!validatePhone(phone)) {
                 //@ts-ignore

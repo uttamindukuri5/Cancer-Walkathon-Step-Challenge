@@ -61,6 +61,9 @@ export default () => {
         if (value !== tab) {
             setTab(value);
         }
+        if (value === 'Dashboard') {
+            window.location.reload(false);
+        }
     }
 
     let base; 
