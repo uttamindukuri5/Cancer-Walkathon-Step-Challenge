@@ -19,7 +19,7 @@ export default () => {
     const 
         SITE_KEY = '6Lenhc4ZAAAAAG9-M_NTzCtMq0faInT6yp0PjXGH',
         messages = useRef(null),
-        [selectedTeam, setSelectedTeam] = useState(teams[0]),
+        [selectedTeam, setSelectedTeam] = useState(''),
         [ firstName, setFirstName ] = useState(''),
         [ lastName, setLastName ] = useState(''),
         [ userId, setUserId ] = useState(''),
@@ -79,7 +79,7 @@ export default () => {
             selectedTeam
         };
 
-        if (firstName.trim().length > 1 && lastName.trim().length > 1 && validatePhone(phone) && validateEmail(email) && validateUserId(userId)) {
+        if (firstName.trim().length > 1 && lastName.trim().length > 1 && validatePhone(phone) && validateEmail(email) && validateUserId(userId) && selectedTeam.trim().length > 1) {
             submitData(user);
         } else {
             if (firstName.trim().length < 1) {
@@ -101,6 +101,9 @@ export default () => {
             else if (!validateEmail(email)) {
                 //@ts-ignore
                 messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid email'});
+            } else if (selectedTeam.trim().length < 1) {
+                //@ts-ignore
+                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please select a team'});
             }
             else if (!validateUserId(userId)) {
                 //@ts-ignore
