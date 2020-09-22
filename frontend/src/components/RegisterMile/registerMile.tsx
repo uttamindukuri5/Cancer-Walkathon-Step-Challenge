@@ -15,7 +15,7 @@ export default () => {
     const 
         [ date, setDate ] = useState(today),
         [ userId, setUserId ] = useState(''),
-        [ mile, setMile ] = useState(0);
+        [ mile, setMile ] = React.useState<number>();
 
 
     const resetValue = () => {
@@ -24,28 +24,29 @@ export default () => {
     }
 
     const submit = () => {
-        const today = new Date();
-        const track = {
-            userId: userId.toLowerCase(),
-            date,
-            miles: mile
-        };
-        console.log(mile);
-        if (mile >= 21) {
-            //@ts-ignore
-            messages.current.show({ severity: 'error', summary: 'Mile limit exceeded', detail: 'You can have a max of 20 miles' });
-            resetValue();
-            return;
+        if (mile) {
+            const today = new Date();
+            const track = {
+                userId: userId.toLowerCase(),
+                date,
+                miles: mile
+            };
+            if (mile >= 21) {
+                //@ts-ignore
+                messages.current.show({ severity: 'error', summary: 'Mile limit exceeded', detail: 'You can have a max of 20 miles' });
+                resetValue();
+                return;
+            }
+    
+            if (date > today) {
+                //@ts-ignore
+                messages.current.show({ severity: 'error', summary: 'Date Not Valid', detail: 'Cannot enter future date' });
+                resetValue();
+                return;
+            }
+    
+            submitData(track);
         }
-
-        if (date > today) {
-            //@ts-ignore
-            messages.current.show({ severity: 'error', summary: 'Date Not Valid', detail: 'Cannot enter future date' });
-            resetValue();
-            return;
-        }
-
-        submitData(track);
 
         resetValue();
     };
@@ -94,9 +95,9 @@ export default () => {
             </div>
             <div className={ classes.section }>
                 <label className={ classes.text }><strong>Miles: </strong></label>
-                <InputNumber value={ mile } onValueChange={ (e) => setMile(e.value.toFixed(2)) } mode='decimal' minFractionDigits={ 2 } maxFractionDigits={ 2 }/>
+                <InputNumber value={ mile } onValueChange={ (e) => setMile(e.value) } mode='decimal' minFractionDigits={ 2 } maxFractionDigits={ 2 }/>
             </div>
-            <span className="p-tag p-tag-warning">Note: 2000 steps = 1 mile and 0.6km = 1 mile</span>
+            <span className="p-tag p-tag-warning">Note: 2000 steps = 1 mile and 1km = 0.62 mile</span>
             <div id={ classes.submitButton } className={ classes.section }>
                 <Button label='Track Miles' className='p-button-success' onClick={ submit }/>
             </div> 
