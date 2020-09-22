@@ -54,7 +54,7 @@ export default () => {
             humanKey: res.response
         }
 
-        const response = await fetch('https://vtwalk.org:4000/register/captcha', {
+        const response = await fetch('https://www.vtwalk.org:4000/register/captcha', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -123,7 +123,7 @@ export default () => {
                 team: user.selectedTeam
             }
         };
-        const data = await fetch('https://vtwalk.org:4000/register/user', { 
+        const data = await fetch('https://www.vtwalk.org:4000/register/user', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

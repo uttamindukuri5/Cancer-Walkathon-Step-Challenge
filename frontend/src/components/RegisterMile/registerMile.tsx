@@ -60,7 +60,7 @@ export default () => {
             }
         };
         try {
-            const data = await fetch('https://vtwalk.org:4000/register/mile', {
+            const data = await fetch('https://www.vtwalk.org:4000/register/mile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

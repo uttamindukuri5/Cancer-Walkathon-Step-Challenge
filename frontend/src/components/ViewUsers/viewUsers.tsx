@@ -11,7 +11,7 @@ export default () => {
         [ hideModal, setHideModal ] = useState(false);
 
     const fetchData = async() => {
-        const response = await fetch('https://vtwalk.org:4000/listUsers');
+        const response = await fetch('https://www.vtwalk.org:4000/listUsers');
         return await response.json();
     };
 

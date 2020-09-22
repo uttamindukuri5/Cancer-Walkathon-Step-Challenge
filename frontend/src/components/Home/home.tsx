@@ -19,12 +19,12 @@ export default () => {
         [tab, setTab] = useState(tabs[0]);
 
     const fetchData = async () => {
-        const response = await fetch('https://vtwalk.org:4000/teams'); 
+        const response = await fetch('https://www.vtwalk.org:4000/teams'); 
         return await response.json();
     };
 
     const fetchUsers = async () => {
-        const response = await fetch('https://vtwalk.org:4000/totalUsers');
+        const response = await fetch('https://www.vtwalk.org:4000/totalUsers');
         return await response.json();
     }
 
