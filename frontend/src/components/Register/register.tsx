@@ -81,6 +81,7 @@ export default () => {
 
         if (firstName.trim().length > 1 && lastName.trim().length > 1 && validatePhone(phone) && validateEmail(email) && validateUserId(userId) && selectedTeam.trim().length > 1) {
             submitData(user);
+            resetValue();
         } else {
             if (firstName.trim().length < 1) {
                 //@ts-ignore
@@ -92,7 +93,7 @@ export default () => {
             }
             else if (!validateUserId(userId)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid user ID'});
+                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please fill in the User ID'});
             }
             else if (!validatePhone(phone)) {
                 //@ts-ignore
@@ -110,9 +111,6 @@ export default () => {
                 messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid user ID'});
             }
         }
-
-        resetValue();
-        
     }
 
     const submitData = async (user: any) => {
