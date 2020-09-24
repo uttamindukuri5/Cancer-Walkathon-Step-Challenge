@@ -3,7 +3,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
-import { Toast } from 'primereact/toast';
+import { Messages } from 'primereact/messages';
 
 import Table from '../Table/table';
 import classes from './registerMile.module.css';
@@ -19,7 +19,7 @@ export default () => {
         [ userId, setUserId ] = useState(''),
         [ mile, setMile ] = React.useState<number>(),
         [ data, setData ]: any[] = useState([]),
-        [ totalMiles, setTotalMiles ] = useState(0); 
+        [ totalMiles, setTotalMiles ] = useState(0);
 
 
     const resetValue = () => {
@@ -50,13 +50,12 @@ export default () => {
     
             await submitData(track);
             await fetchViewData(userId);
+            resetValue();
         } else {
             //@ts-ignore
-            messages.current.show({ severity: 'error', summary: 'Mile Error', detail: 'Please enter a mile between 0.01 to 20.00 miles' });
+            messages.current.show({ severity: 'error', detail: 'Please enter a mile between 0.01 to 20.00 miles' });
             return;
         }
-
-        resetValue();
     };
 
     const fetchViewData = async (userId: string) => {
@@ -74,7 +73,7 @@ export default () => {
 
             if (response.status === 404 || response.status === 400) {
                 // @ts-ignore
-                messages.current.show({ severity: 'error', summary: 'User Not Found', detail: 'This user ID does not exist, please go to register page to enter your miles.' });
+                messages.current.show({ severity: 'error', detail: 'This user ID does not exist, please go to register page to enter your miles.' });
             } else {
                 const data = await response.json();
                 formatData(data);
@@ -119,10 +118,10 @@ export default () => {
 
             if (data.status === 404 || data.status === 400) {
                 // @ts-ignore
-                messages.current.show({ severity: 'error', summary: 'User Not Found', detail: 'This user ID does not exist, please go to register page to enter your miles.' });
+                messages.current.show({ severity: 'error', detail: 'This user ID does not exist, please go to register page to enter your miles.' });
             } else {
                 // @ts-ignore
-                messages.current.show({ severity: 'success', summary: 'Miles Saves', detail: 'Your miles have been successfully saved' });
+                messages.current.show({ severity: 'success', detail: 'Your miles have been successfully saved' });
             }
         } catch (e) {
             console.log(e);
@@ -145,12 +144,10 @@ export default () => {
             
         )
     }
-
-
     return (
         <div>
             <div id={ classes.form }>
-                <Toast ref={ messages }/>
+                
                 <div className={ classes.section }>
                     <div>
                         <label className={ classes.text }><strong>User ID: </strong></label>
@@ -191,6 +188,9 @@ export default () => {
                     </div>
                 </div>
                 <span id={ classes.info } className="p-tag p-tag-warning">Note: 2000 steps = 1 mile and 1 km = 0.62 mile</span>
+                <div>
+                    <Messages ref={ messages }/>
+                </div>
                 <div id={ classes.submitButton }>
                     <Button label='Track Miles' className='p-button-success' onClick={ submit }/>
                 </div> 
