@@ -33,7 +33,7 @@ export default () => {
             const track = {
                 userId: userId.toLowerCase(),
                 date,
-                miles: mile
+                miles: mile.toFixed(2)
             };
 
             if (mile <= 0.00 && mile >= 21) {
