@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
@@ -12,10 +11,11 @@ export default () => {
     const teams = [
         'Plano/ Richardson', 
         'Frisco/ Prosper',
-        'Irving/ Coppel',
+        'Irving/ Coppell',
         'Non-Dallas',
         'India'
     ];
+
     const 
         SITE_KEY = '6Lenhc4ZAAAAAG9-M_NTzCtMq0faInT6yp0PjXGH',
         messages = useRef(null),
@@ -158,75 +158,100 @@ export default () => {
             <div id={ classes.form }>
                 <Toast ref={ messages } />
                 <div className={ classes.section }>
-                    <label className={ classes.text }><strong>First Name: </strong></label>
-                    <InputText 
-                        value={ firstName } 
-                        onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setFirstName(target.value) } 
-                        required={ true }
-                        onClick={ () => setTouched({ ...touched, firstName: true }) }
-                        className={ touched.firstName ? ( firstName.trim().length > 1 ? '' : 'p-invalid') : '' }
-                    />
+                    <div className={ classes.inputLabel }>
+                        <label className={ classes.text }><strong>First Name: </strong></label>
+                    </div>
+                    <div className={ classes.formInput }>
+                        <InputText 
+                            value={ firstName } 
+                            onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setFirstName(target.value) } 
+                            required={ true }
+                            onClick={ () => setTouched({ ...touched, firstName: true }) }
+                            className={ touched.firstName ? ( firstName.trim().length > 1 ? '' : 'p-invalid') : '' }
+                            style={{ width: '100%' }}
+                        />
+                    </div>
                 </div>
                 <div className={ classes.section }>
-                    <label className={ classes.text }><strong>Last Name: </strong></label>
-                    <InputText 
-                        value={ lastName } 
-                        onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setLastName(target.value) }
-                        required={ true }
-                        onClick={ () => setTouched({ ...touched, lastName: true }) }
-                        className={ touched.lastName ? ( lastName.trim().length > 1 ? '' : 'p-invalid' ) : '' }
-                    />
+                    <div className={ classes.inputLabel }>
+                        <label className={ classes.text }><strong>Last Name: </strong></label>
+                    </div>
+                    <div className={ classes.formInput }>
+                        <InputText 
+                            value={ lastName } 
+                            onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setLastName(target.value) }
+                            required={ true }
+                            onClick={ () => setTouched({ ...touched, lastName: true }) }
+                            className={ touched.lastName ? ( lastName.trim().length > 1 ? '' : 'p-invalid' ) : '' }
+                            style={{ width: '100%' }}
+                        />
+                    </div>
                 </div>
                 <div className={ classes.section }>
-                    <label className={ classes.text }><strong>User ID: </strong></label>
-                    <InputText 
-                        value={ userId } 
-                        onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setUserId(target.value) }
-                        required={ true }
-                        onClick={ () => setTouched({ ...touched, userId: true }) }
-                        className={ touched.userId ? ( validateUserId(userId) ? '' : 'p-invalid' ) : '' }
-                    />
+                    <div className={ classes.inputLabel }>
+                        <label className={ classes.text }><strong>User ID: </strong></label>
+                    </div>
+                    <div className={ classes.formInput }>
+                        <InputText 
+                            value={ userId } 
+                            onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setUserId(target.value) }
+                            required={ true }
+                            onClick={ () => setTouched({ ...touched, userId: true }) }
+                            className={ touched.userId ? ( validateUserId(userId) ? '' : 'p-invalid' ) : '' }
+                            style={{ width: '100%' }}
+                        />
+                    </div>
                 </div>
                 <div className={ classes.section }>
-                    <label className={ classes.text }><strong>Phone: </strong></label>
-                    <InputText 
-                        value={ phone } 
-                        onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setPhone(target.value) }
-                        required={ true }
-                        onClick={ () => setTouched({ ...touched, phone: true }) }
-                        className={ touched.phone ? ( validatePhone(phone) ? '' : 'p-invalid' ) : '' }
-                    />
+                    <div className={ classes.inputLabel }>
+                        <label className={ classes.text }><strong>Phone: </strong></label>
+                    </div>
+                    <div className={ classes.formInput }>
+                        <InputText 
+                            value={ phone } 
+                            onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setPhone(target.value) }
+                            required={ true }
+                            onClick={ () => setTouched({ ...touched, phone: true }) }
+                            className={ touched.phone ? ( validatePhone(phone) ? '' : 'p-invalid' ) : '' }
+                            style={{ width: '100%' }}
+                        />
+                    </div>
                 </div>
                 <div className={ classes.section }>
-                    <label className={ classes.text }><strong>Email: </strong></label>
-                    <InputText 
-                        value={ email } 
-                        onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setEmail(target.value) }
-                        required={ true }
-                        onClick={ ()=> setTouched({ ...touched, email: true }) }
-                        className={ touched.email ? ( validateEmail(email) ? '' : 'p-invalid' ) : '' }
-                    />
+                    <div className={ classes.inputLabel }>
+                        <label className={ classes.text }><strong>Email: </strong></label>
+                    </div>
+                    <div className={ classes.formInput }>
+                        <InputText 
+                            value={ email } 
+                            onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setEmail(target.value) }
+                            required={ true }
+                            onClick={ ()=> setTouched({ ...touched, email: true }) }
+                            className={ touched.email ? ( validateEmail(email) ? '' : 'p-invalid' ) : '' }
+                            style={{ width: '100%' }}
+                        />
+                    </div>
                 </div>
                 <div className={ classes.section }>
-                    <label className={ classes.text }><strong>Team Name: </strong></label>
-                    <Dropdown 
-                        id={ classes.dropdown }
-                        value={selectedTeam} 
-                        options={teams} onChange={(e) => setSelectedTeam(e.target.value)} 
-                        filter 
-                        showClear
-                        placeholder="Select a Team"
-                    />
+                    <div className={ classes.inputLabel }>
+                        <label className={ classes.text }><strong>Team Name: </strong></label>
+                    </div>
+                    <div className={ classes.formInput }>
+                        <Dropdown 
+                            id={ classes.dropdown }
+                            value={selectedTeam} 
+                            options={teams} onChange={(e) => setSelectedTeam(e.target.value)} 
+                            filter 
+                            showClear
+                            placeholder="Select a Team"
+                            style={{ width: '100%' }}
+                        />
+                    </div>
                 </div>
-                <div className={ classes.section }>
+                <div id={ classes.captcha }  className={ classes.section }>
                     <Captcha siteKey={ SITE_KEY } onResponse={ verifyCaptcha }/>
                 </div>
                 <div id={ classes.submitButton } className={ classes.section }>
-                    <div className={ classes.formButton }>
-                        <Link to='/'>
-                            <Button label='Home' className='p-button-primary'/>
-                        </Link>
-                    </div>
                     <div className={ classes.formButton }>
                         <Button label='Register User' className='p-button-success' onClick={ submit  } disabled={ !isHuman }/>
                     </div>

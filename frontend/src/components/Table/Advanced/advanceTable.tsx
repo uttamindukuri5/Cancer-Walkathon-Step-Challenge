@@ -15,7 +15,6 @@ export default ({ data }: IProps) => {
             <DataTable value={ data } className='p-datatable-responsive-demo'>
                 <Column field='userId' header='User ID' sortable />
                 <Column field='miles' header='Miles' sortable />
-                <Column field='team' header='Team' sortable />
             </DataTable>
         </div>
     );

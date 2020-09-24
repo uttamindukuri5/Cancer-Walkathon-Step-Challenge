@@ -23,7 +23,6 @@
     "primereact": "^5.0.0-rc.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "reactstrap": "^8.5.1",
     "typescript": "^3.7.5"
@@ -52,7 +51,6 @@
   "devDependencies": {
     "@types/mongodb": "^3.5.27",
     "@types/node-fetch": "^2.5.7",
-    "@types/react-router-dom": "^5.1.5",
     "@types/reactstrap": "^8.5.1"
   }
 }

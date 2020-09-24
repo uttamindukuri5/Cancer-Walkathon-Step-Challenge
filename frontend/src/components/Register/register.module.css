@@ -1,5 +1,7 @@
 .section {
-    margin: 10px;
+    width: 100%;
+    display: block;
+    text-align: center;
 }
 
 #form {
@@ -10,7 +12,7 @@
     flex-direction: column;
     align-items: flex-end;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    padding: 10px;
+    padding: 20px;
 }
 
 .text {
@@ -24,13 +26,23 @@
 #submitButton {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 
-#content {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(to right, rgba(150, 149, 151, 0.541), rgba(163, 162, 163, 0.79)), url('../../assets//background-img.jpg') no-repeat center center fixed;
+#form {
+    margin-top: 25px;
+}
+
+.inputLabel {
+    width: 100%;
+    text-align: left;
+}
+
+.formInput {
+    width: 100%;
+}
+
+#captcha {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

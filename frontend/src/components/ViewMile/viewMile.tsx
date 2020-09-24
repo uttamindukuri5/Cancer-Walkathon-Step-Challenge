@@ -50,7 +50,7 @@ export default () => {
             totalMiles += track.miles;
             const date = new Date(track.date);
             const newData = {
-                date: `${ date.getMonth() }/${ date.getDate() }/${ date.getFullYear() }`,
+                date: `${ date.getMonth() + 1 }/${ date.getDate() }/${ date.getFullYear() }`,
                 miles: track.miles
             }
             modifiedData.push(newData);
@@ -80,10 +80,18 @@ export default () => {
             <Toast ref={ messages } />
             <div id={ classes.form }>
                 <div className={ classes.section }>
-                    <label className={ classes.text }><strong>User ID: </strong></label>
-                    <InputText value={ userId } onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setUserId(target.value) }/>
+                    <div>
+                        <label className={ classes.text }><strong>User ID: </strong></label>
+                    </div>
+                    <div className={ classes.formInput }>
+                        <InputText 
+                            value={ userId } 
+                            onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setUserId(target.value) }
+                            style={{ width: 'inherit' }}    
+                        />
+                    </div>
                 </div>
-                <div id={ classes.submitButton } className={ classes.section }>
+                <div id={ classes.submitButton }>
                     <Button label='Track Miles' className='p-button-success' onClick={ submit  }/>
                 </div> 
             </div>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { SelectButton } from 'primereact/selectbutton';
 
 import Chart from '../Chart/chart';
 import Table from '../Table/table';
+import Register from '../Register/register';
 import RegisterMile from '../RegisterMile/registerMile';
 import ViewMile from '../ViewMile/viewMile';
 import ViewUsers from '../ViewUsers/viewUsers';
@@ -12,8 +12,7 @@ import classes from './home.module.css';
 export default () => {
 
     const
-        history = useHistory(),
-        tabs = ['Dashboard', 'Register', 'Enter Miles', 'View Miles', 'Walkers'],
+        tabs = ['Dashboard', 'Walkers', 'Register', 'Enter Miles', 'View Miles'],
         [teams, setTeams]: any[] = useState([]),
         [numUsers, setNumUsers] = useState(0),
         [tab, setTab] = useState(tabs[0]);
@@ -109,7 +108,9 @@ export default () => {
             <ViewMile />
         );
     } else if (tab === 'Register') {
-        history.push('/register');
+        base = (
+            <Register />
+        );
     } else if (tab === 'Walkers') {
         base = (
             <ViewUsers />
