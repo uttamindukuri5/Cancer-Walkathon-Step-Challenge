@@ -108,7 +108,7 @@ export default () => {
             }
             else if (!validateUserId(userId)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid user ID'});
+                messages.current.show({severity: 'error', detail: 'Please input a valid user ID'});
             }
         }
         

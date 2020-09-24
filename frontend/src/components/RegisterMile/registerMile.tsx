@@ -38,13 +38,13 @@ export default () => {
 
             if (mile <= 0.00 && mile >= 21) {
                 //@ts-ignore
-                messages.current.show({ severity: 'error', summary: 'Mile Error', detail: 'Please enter a mile that is greater than 0 and less than or equal to 20' });
+                messages.current.show({ severity: 'error', detail: 'Please enter a mile that is greater than 0 and less than or equal to 20' });
                 return;
             }
     
             if (date > today) {
                 //@ts-ignore
-                messages.current.show({ severity: 'error', summary: 'Date Not Valid', detail: 'Cannot enter future date' });
+                messages.current.show({ severity: 'error', detail: 'Cannot enter future date' });
                 return;
             }
     
