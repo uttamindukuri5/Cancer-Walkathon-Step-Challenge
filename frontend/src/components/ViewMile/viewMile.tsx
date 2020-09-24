@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Toast } from 'primereact/toast';
+import { Messages } from 'primereact/messages';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 
@@ -33,7 +33,7 @@ export default () => {
 
             if (response.status === 404 || response.status === 400) {
                 // @ts-ignore
-                messages.current.show({ severity: 'error', summary: 'User Not Found', detail: 'This user ID does not exist, please go to register page to enter your miles.' });
+                messages.current.show({ severity: 'error', detail: 'This user ID does not exist, please go to register page to enter your miles.' });
             } else {
                 const data = await response.json();
                 formatData(data);
@@ -77,7 +77,6 @@ export default () => {
 
     return (
         <div>
-            <Toast ref={ messages } />
             <div id={ classes.form }>
                 <div className={ classes.section }>
                     <div>
@@ -90,6 +89,9 @@ export default () => {
                             style={{ width: 'inherit' }}    
                         />
                     </div>
+                </div>
+                <div>
+                    <Messages ref={ messages } />
                 </div>
                 <div id={ classes.submitButton }>
                     <Button label='Track Miles' className='p-button-success' onClick={ submit  }/>

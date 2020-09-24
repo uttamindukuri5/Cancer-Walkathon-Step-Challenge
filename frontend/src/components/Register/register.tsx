@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
-import { Toast } from 'primereact/toast';
+import { Messages } from 'primereact/messages';
 import { Captcha } from 'primereact/captcha';
 
 import classes from './register.module.css';
@@ -85,32 +85,33 @@ export default () => {
         } else {
             if (firstName.trim().length < 1) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please fill in the first name'});
+                messages.current.show({severity: 'error', detail: 'Please fill in the first name'});
             }
             else if (lastName.trim().length < 1) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please fill in the last name'});
+                messages.current.show({severity: 'error', detail: 'Please fill in the last name'});
             }
             else if (!validateUserId(userId)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please fill in the User ID'});
+                messages.current.show({severity: 'error', detail: 'Please input a valid user ID'});
             }
             else if (!validatePhone(phone)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid phone number'});
+                messages.current.show({severity: 'error', detail: 'Please input a valid phone number'});
             }
             else if (!validateEmail(email)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid email'});
+                messages.current.show({severity: 'error', detail: 'Please input a valid email'});
             } else if (selectedTeam.trim().length < 1) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please select a team'});
+                messages.current.show({severity: 'error', detail: 'Please select a team'});
             }
             else if (!validateUserId(userId)) {
                 //@ts-ignore
                 messages.current.show({severity: 'error', summary: 'Error Message', detail: 'Please input a valid user ID'});
             }
         }
+        
     }
 
     const submitData = async (user: any) => {
@@ -134,10 +135,10 @@ export default () => {
 
          if (data.status === 400) {
              // @ts-ignore
-             messages.current.show({ severity: 'error', summary: 'User Already Registered', detail: 'Please provide a different user ID' });
+             messages.current.show({ severity: 'error', detail: 'Please provide a different user ID' });
          } else {
              // @ts-ignore
-             messages.current.show({ severity: 'success', summary: 'Successfully Registerd', detail: 'Congratulations, you have been successfully registered' });
+             messages.current.show({ severity: 'success', detail: 'Congratulations, you have been successfully registered' });
          }
     }
 
@@ -158,7 +159,6 @@ export default () => {
     return (
         <div id={ classes.content }>
             <div id={ classes.form }>
-                <Toast ref={ messages } />
                 <div className={ classes.section }>
                     <div className={ classes.inputLabel }>
                         <label className={ classes.text }><strong>First Name: </strong></label>
@@ -252,6 +252,9 @@ export default () => {
                 </div>
                 <div id={ classes.captcha }  className={ classes.section }>
                     <Captcha siteKey={ SITE_KEY } onResponse={ verifyCaptcha }/>
+                </div>
+                <div>
+                    <Messages ref={ messages } />
                 </div>
                 <div id={ classes.submitButton } className={ classes.section }>
                     <div className={ classes.formButton }>
