@@ -63,7 +63,11 @@
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",
+<<<<<<< HEAD
     "react-router-dom": "^5.2.0",
+=======
+    "react-scripts": "3.4.3",
+>>>>>>> dev
     "reactstrap": "^8.5.1",
     "resolve": "1.15.0",
     "resolve-url-loader": "3.1.1",
@@ -103,7 +107,6 @@
   "devDependencies": {
     "@types/mongodb": "^3.5.27",
     "@types/node-fetch": "^2.5.7",
-    "@types/react-router-dom": "^5.1.5",
     "@types/reactstrap": "^8.5.1"
   },
   "jest": {
