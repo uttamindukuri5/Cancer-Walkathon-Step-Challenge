@@ -147,7 +147,7 @@ export default () => {
     }
 
     const validateEmail = (email: string): boolean => {
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         return emailRegex.test(email);
     }
 
