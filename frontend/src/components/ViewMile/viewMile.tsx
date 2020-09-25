@@ -94,7 +94,7 @@ export default () => {
                     <Messages ref={ messages } />
                 </div>
                 <div id={ classes.submitButton }>
-                    <Button label='Track Miles' className='p-button-success' onClick={ submit  }/>
+                    <Button label='Enter Miles' className='p-button-success' onClick={ submit  }/>
                 </div> 
             </div>
             <div>

@@ -77,7 +77,7 @@ export default () => {
                 <div className='p-d-flex p-jc-center p-flex-column p-flex-md-row'>
                     <div className={classes.info + ' p-mb-2 p-mr-2'}>
                         <h4>Total Miles</h4>
-                        <h2 className={ classes.heading }>{ totalMiles }</h2>
+                        <h2 className={ classes.heading }>{ totalMiles.toFixed(2) }</h2>
                     </div>
                     <div className={classes.info + ' p-mb-2 p-mr-2'}>
                         <h4>Target Goal</h4>
