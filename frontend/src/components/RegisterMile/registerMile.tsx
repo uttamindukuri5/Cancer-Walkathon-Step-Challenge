@@ -36,9 +36,9 @@ export default () => {
                 miles: mile.toFixed(2)
             };
 
-            if (mile > 0.00 && mile >= 16) {
+            if (mile < 0 || mile > 26.2) {
                 //@ts-ignore
-                messages.current.show({ severity: 'error', detail: 'Please enter a mile that is greater than 0 and less than or equal to 15' });
+                messages.current.show({ severity: 'error', detail: 'Please enter a mile between 0.01 to 26.20 miles' });
                 return;
             }
     
@@ -50,10 +50,9 @@ export default () => {
     
             await submitData(track);
             await fetchViewData(userId);
-            resetValue();
         } else {
             //@ts-ignore
-            messages.current.show({ severity: 'error', detail: 'Please enter a mile between 0.01 to 15.00 miles' });
+            messages.current.show({ severity: 'error', detail: 'Please enter a mile between 0.01 to 26.20 miles' });
             return;
         }
     };
@@ -122,6 +121,7 @@ export default () => {
             } else {
                 // @ts-ignore
                 messages.current.show({ severity: 'success', detail: 'Your miles have been successfully saved' });
+                resetValue();
             }
         } catch (e) {
             console.log(e);

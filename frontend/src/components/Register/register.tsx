@@ -13,7 +13,7 @@ export default () => {
         'Frisco/ Prosper',
         'Irving/ Coppell',
         'Non-Dallas',
-        'India'
+        'International'
     ];
 
     const 
@@ -79,21 +79,20 @@ export default () => {
             selectedTeam
         };
 
-        if (firstName.trim().length > 1 && lastName.trim().length > 1 && validatePhone(phone) && validateEmail(email) && validateUserId(userId) && selectedTeam.trim().length > 1) {
+        if (validateName(firstName) && validateName(lastName) && validatePhone(phone) && validateEmail(email) && validateUserId(userId) && selectedTeam.trim().length > 1) {
             submitData(user);
-            resetValue();
         } else {
-            if (firstName.trim().length < 1) {
+            if (!validateName(firstName)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', detail: 'Please fill in the first name'});
+                messages.current.show({severity: 'error', detail: 'First Name must have a minimum of 2 letters.'});
             }
-            else if (lastName.trim().length < 1) {
+            else if (!validateName(lastName)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', detail: 'Please fill in the last name'});
+                messages.current.show({severity: 'error', detail: 'Last Name must have a minimum of 2 letters'});
             }
             else if (!validateUserId(userId)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', detail: 'Please input a valid user ID'});
+                messages.current.show({severity: 'error', detail: 'User ID must have a minimum of 4 characters. Only allows and numbers and letters'});
             }
             else if (!validatePhone(phone)) {
                 //@ts-ignore
@@ -139,7 +138,13 @@ export default () => {
          } else {
              // @ts-ignore
              messages.current.show({ severity: 'success', detail: 'Congratulations, you have been successfully registered' });
+             resetValue();
          }
+    }
+
+    const validateName = (name: string): boolean => {
+        const nameRegex = /^[a-zA-Z]{2,15}$/;
+        return nameRegex.test(name);
     }
 
     const validatePhone = (phone: string): boolean => {
@@ -153,8 +158,11 @@ export default () => {
     }
 
     const validateUserId = (userId: string): boolean => {
-        return userId.trim().length > 0 && userId.trim().length < 21;
+        const userIdRegex = /^[0-9a-zA-Z]{4,15}$/;
+        return userIdRegex.test(userId.toLowerCase());
     }
+
+
 
     return (
         <div id={ classes.content }>
@@ -169,7 +177,7 @@ export default () => {
                             onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setFirstName(target.value) } 
                             required={ true }
                             onClick={ () => setTouched({ ...touched, firstName: true }) }
-                            className={ touched.firstName ? ( firstName.trim().length > 1 ? '' : 'p-invalid') : '' }
+                            className={ touched.firstName ? ( validateName(firstName) ? '' : 'p-invalid') : '' }
                             style={{ width: '100%' }}
                         />
                     </div>
@@ -184,7 +192,7 @@ export default () => {
                             onChange={ ({ target }: React.ChangeEvent<HTMLInputElement>) => setLastName(target.value) }
                             required={ true }
                             onClick={ () => setTouched({ ...touched, lastName: true }) }
-                            className={ touched.lastName ? ( lastName.trim().length > 1 ? '' : 'p-invalid' ) : '' }
+                            className={ touched.lastName ? ( validateName(lastName) ? '' : 'p-invalid' ) : '' }
                             style={{ width: '100%' }}
                         />
                     </div>
