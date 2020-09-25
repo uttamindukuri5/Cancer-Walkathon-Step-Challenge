@@ -35,16 +35,16 @@ export default () => {
                 date,
                 miles: mile.toFixed(2)
             };
-
-            if (mile <= 0.00 && mile >= 21) {
+            console.log(mile + ' ' + (mile >= 16));
+            if (mile > 0.00 && mile >= 16) {
                 //@ts-ignore
-                messages.current.show({ severity: 'error', summary: 'Mile Error', detail: 'Please enter a mile that is greater than 0 and less than or equal to 20' });
+                messages.current.show({ severity: 'error', detail: 'Please enter a mile that is greater than 0 and less than or equal to 15' });
                 return;
             }
     
             if (date > today) {
                 //@ts-ignore
-                messages.current.show({ severity: 'error', summary: 'Date Not Valid', detail: 'Cannot enter future date' });
+                messages.current.show({ severity: 'error', detail: 'Cannot enter future date' });
                 return;
             }
     
@@ -53,7 +53,7 @@ export default () => {
             resetValue();
         } else {
             //@ts-ignore
-            messages.current.show({ severity: 'error', detail: 'Please enter a mile between 0.01 to 20.00 miles' });
+            messages.current.show({ severity: 'error', detail: 'Please enter a mile between 0.01 to 15.00 miles' });
             return;
         }
     };
@@ -192,7 +192,7 @@ export default () => {
                     <Messages ref={ messages }/>
                 </div>
                 <div id={ classes.submitButton }>
-                    <Button label='Track Miles' className='p-button-success' onClick={ submit }/>
+                    <Button label='Enter Miles' className='p-button-success' onClick={ submit }/>
                 </div> 
             </div>
             <div>
