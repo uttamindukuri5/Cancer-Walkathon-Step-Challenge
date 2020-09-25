@@ -11,7 +11,7 @@ export default ({ data, viewTeam }: IProps) => {
         <div>
             <DataTable value={data}>
                 <Column field={viewTeam ? 'teamName' : 'date' } header={ viewTeam ? 'Team' : 'Date' }></Column>
-                <Column field={viewTeam ? 'totalMiles' : 'miles'} header="Miles"></Column>
+                <Column field={viewTeam ? 'totalMiles' : 'miles'} header="Miles" bodyStyle={{ width: '100%', textAlign: 'right' }}></Column>
             </DataTable>
         </div>
     );
