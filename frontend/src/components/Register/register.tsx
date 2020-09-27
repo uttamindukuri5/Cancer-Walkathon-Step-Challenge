@@ -9,11 +9,11 @@ import classes from './register.module.css';
 
 export default () => {
     const teams = [
-        'Plano/ Richardson', 
-        'Frisco/ Prosper',
-        'Irving/ Coppell',
-        'Non-Dallas',
-        'International'
+        'Plano/ Richardson Pursuers', 
+        'Frisco/ Prosper Achievers',
+        'Irving/ Coppell Believers',
+        'International Inspirers',
+        'Rest of USA Overachievers'  
     ];
 
     const 
@@ -84,26 +84,26 @@ export default () => {
         } else {
             if (!validateName(firstName)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', detail: 'First Name must have a minimum of 2 letters.'});
+                messages.current.show({severity: 'error', detail: 'First Name allows minimum of 2 alphabets / No Special Characters or Numbers'});
             }
             else if (!validateName(lastName)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', detail: 'Last Name must have a minimum of 2 letters'});
+                messages.current.show({severity: 'error', detail: 'Last Name allows minimum of 2 alphabets / No Special Characters or Numbers'});
             }
             else if (!validateUserId(userId)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', detail: 'User ID must have a minimum of 4 characters. Only allows and numbers and letters'});
+                messages.current.show({severity: 'error', detail: 'User ID must have a minimum of 4 characters.'});
             }
             else if (!validatePhone(phone)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', detail: 'Please input a valid phone number'});
+                messages.current.show({severity: 'error', detail: 'Enter a valid phone number'});
             }
             else if (!validateEmail(email)) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', detail: 'Please input a valid email'});
+                messages.current.show({severity: 'error', detail: 'Enter a valid email'});
             } else if (selectedTeam.trim().length < 1) {
                 //@ts-ignore
-                messages.current.show({severity: 'error', detail: 'Please select a team'});
+                messages.current.show({severity: 'error', detail: 'Select a team'});
             }
         }
         
@@ -144,7 +144,7 @@ export default () => {
     }
 
     const validatePhone = (phone: string): boolean => {
-        const phoneRegex = /([2-9]\d{9})|([2-9]\d{2}-\d{3}-\d{4})/;
+        const phoneRegex = /^[0-9]{10,12}$/;
         return phoneRegex.test(phone);
     }
 
@@ -154,8 +154,7 @@ export default () => {
     }
 
     const validateUserId = (userId: string): boolean => {
-        const userIdRegex = /^[0-9a-zA-Z]{4,15}$/;
-        return userIdRegex.test(userId.toLowerCase());
+        return userId.trim().length >= 4
     }
 
 
