@@ -13,7 +13,7 @@ export default () => {
         'Frisco/ Prosper Achievers',
         'Irving/ Coppell Believers',
         'International Inspirers',
-        'Rest of USA Overachievers'  
+        'Rest of USA Innovators'  
     ];
 
     const 
