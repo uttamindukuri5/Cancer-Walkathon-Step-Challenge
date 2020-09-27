@@ -12,7 +12,9 @@ import fetch from 'node-fetch';
 export default () => {
     const 
         today = new Date(),
-        messages = useRef(null);
+        messages = useRef(null),
+        startDate = new Date('09/28/2020'),
+        endDate = new Date('10/28/2020');
 
     const 
         [ date, setDate ] = useState(today),
@@ -25,6 +27,23 @@ export default () => {
     const resetValue = () => {
         setUserId('');
         setMile(0);
+    }
+
+    const dateValidation = (): boolean => {
+        if (date < startDate) {
+            //@ts-ignore
+            messages.current.show({ severity: 'error', detail: 'Cannot enter dates before Sept. 28th..' });
+            return false;
+        } else if (date > today) {
+            //@ts-ignore
+            messages.current.show({ severity: 'error', detail: 'Cannot enter future date.' });
+            return false;
+        } else if (date > endDate) {
+            //@ts-ignore
+            messages.current.show({ severity: 'error', detail: 'Walkathon has ended.' });
+            return false;
+        }
+        return true;
     }
 
     const submit = async () => {
@@ -42,9 +61,7 @@ export default () => {
                 return;
             }
     
-            if (date > today) {
-                //@ts-ignore
-                messages.current.show({ severity: 'error', detail: 'Cannot enter future date' });
+            if (!dateValidation()) {
                 return;
             }
     
