@@ -10,7 +10,7 @@ interface IProps {
 export default ({ data, visible, changeVisibility }: IProps)  => {
     return (
         <div>
-            <Dialog visible={ visible } onHide={ () => changeVisibility(false) }>
+            <Dialog visible={ visible } onHide={ () => changeVisibility(false) } position='top'>
                 <h4>{ data.name }</h4>
                 <h2>{ data.miles } miles</h2>
                 <p>User ID: { data.userId }</p>
