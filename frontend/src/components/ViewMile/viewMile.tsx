@@ -33,7 +33,7 @@ export default () => {
 
             if (response.status === 404 || response.status === 400) {
                 // @ts-ignore
-                messages.current.show({ severity: 'error', detail: 'This user ID does not exist, please go to register page to enter your miles.' });
+                messages.current.show({ severity: 'error', detail: 'No miles entered or User ID does not exist.' });
             } else {
                 const data = await response.json();
                 formatData(data);
@@ -45,7 +45,7 @@ export default () => {
 
     const formatData = (data: any) => {
         const modifiedData: any[] = [];
-        let totalMiles = 0;
+        let totalMiles: number = 0;
         for (let track of data) {
             totalMiles += track.miles;
             const date = new Date(track.date);
@@ -55,6 +55,7 @@ export default () => {
             }
             modifiedData.push(newData);
         };
+        totalMiles = parseFloat(totalMiles.toFixed(2));
         setTotalMiles(totalMiles);
         setData(modifiedData);
     }

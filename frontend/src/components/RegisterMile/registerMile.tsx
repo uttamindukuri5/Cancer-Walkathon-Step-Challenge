@@ -48,7 +48,6 @@ export default () => {
 
     const submit = async () => {
         if (mile) {
-            const today = new Date();
             const track = {
                 userId: userId.toLowerCase(),
                 date,
