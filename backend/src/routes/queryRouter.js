@@ -17,8 +17,10 @@ router.get('/teams', async(req, res, next) => {
             };
             teamList.push(teamData);
         }
-        else
+        else {
             teamList[existingTeam].totalMiles += user.miles;
+            teamList[existingTeam].totlaMiles = parseFloat((teamList[existingTeam].totalMiles).toFixed(2));
+        }
     }
     return res.status(200).send(teamList);
 });
@@ -60,7 +62,7 @@ router.get('/listUsers', async(req, res, next) => {
             userId: user.userId,
             name: `${ user.firstName } ${ user.lastName }`,
             team: user.team,
-            miles: user.miles
+            miles: parseFloat((user.miles).toFixed(2))
         });
     });
 

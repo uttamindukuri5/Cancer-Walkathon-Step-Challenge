@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SelectButton } from 'primereact/selectbutton';
 
-import Chart from '../Chart/chart';
 import Table from '../Table/table';
 import Register from '../Register/register';
 import RegisterMile from '../RegisterMile/registerMile';
@@ -94,9 +93,6 @@ export default () => {
                 </div>
                 <hr />
                 <div id={ classes.graphic }>
-                    <div className={ classes.data }>
-                        <Chart data={ teams } />
-                    </div>
                     <div className={ classes.data }>
                         <Table data={ teams } viewTeam={ true } />
                     </div>
