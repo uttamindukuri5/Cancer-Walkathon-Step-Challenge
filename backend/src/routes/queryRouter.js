@@ -19,9 +19,13 @@ router.get('/teams', async(req, res, next) => {
         }
         else {
             teamList[existingTeam].totalMiles += user.miles;
-            teamList[existingTeam].totlaMiles = parseFloat((teamList[existingTeam].totalMiles).toFixed(2));
         }
     }
+
+    for (let team of teamList) {
+        team.totalMiles = parseFloat(team.totalMiles.toFixed(2));
+    }
+    
     return res.status(200).send(teamList);
 });
 
