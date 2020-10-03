@@ -29,7 +29,7 @@ export default ({ data, setModal, setUser }: IProps) => {
     return (
         <div>
             <DataTable value={ data } className='p-datatable-responsive-demo' sortField='miles' sortOrder={ -1 }>
-                <Column body={ nameData } field='name' header='Name' sortable />
+                <Column body={ nameData } field='name' header='Name' sortable filter filterPlaceholder='Please enter name' filterMatchMode='contains' />
                 <Column field='miles' header='Miles' bodyStyle={{ width: '100%', textAlign: 'right' }} sortable />
             </DataTable>
         </div>
