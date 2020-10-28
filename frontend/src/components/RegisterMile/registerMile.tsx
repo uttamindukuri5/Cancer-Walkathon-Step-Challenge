@@ -14,7 +14,7 @@ export default () => {
         today = new Date(),
         messages = useRef(null),
         startDate = new Date('09/28/2020'),
-        endDate = new Date('10/28/2020');
+        endDate = new Date('10/29/2020');
 
     const 
         [ date, setDate ] = useState(today),
