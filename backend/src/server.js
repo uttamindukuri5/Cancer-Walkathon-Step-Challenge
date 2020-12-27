@@ -18,8 +18,8 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
     app.use('/', queryRouter);
     app.use('/register', registrationRouter);
     https.createServer({
-        key: fs.readFileSync('../../../../certs/vtwalk.org.key'),
-        cert: fs.readFileSync('../../../../certs/vtwalk.org.cert')
+        key: fs.readFileSync('../../../../../../etc/letsencrypt/live/vtwalk.org/privkey.pem'),
+        cert: fs.readFileSync('../../../../../../etc/letsencrypt/live/vtwalk.org/fullchain.pem')
     }, app).listen(4000, () => {
         console.log('Server has started in port 4000');
     });
